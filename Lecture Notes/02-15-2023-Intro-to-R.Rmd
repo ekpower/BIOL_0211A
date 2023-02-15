@@ -1,0 +1,52 @@
+---
+title: "Intro to R"
+author: "Emily K. Power"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+Basic Arithmetic
+```{r}
+# add
+2 + 2
+
+# multiply
+2 * 2
+
+# exponent
+2^10
+```
+
+Objects
+```{r}
+# create an object
+count.chocula <- 2^10
+
+# print the object you created
+count.chocula
+
+# redifine the previously created object
+count.chocula <- 100
+
+# what kind of object is count.chocula?
+class(count.chocula)
+
+# make a new object
+froot <- "froot loops"
+
+# what kind of object is froot?
+class(froot)
+
+# help function
+?class
+
+# make another object
+# in this case, the c function is going to make a vector
+luckycharms <- c(2,4,6,8,10)
+
+# print the new object
+luckycharms
+
+# perform algebra on the new object
+luckycharms/2
+```

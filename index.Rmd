@@ -1,0 +1,13 @@
+---
+title: "BIOL 0211A Webpage"
+author: "Emily K. Power"
+date: "`r Sys.Date()`"
+output: 
+    prettydoc::html_pretty:
+        theme: hpstr
+        highlight: github
+---
+
+## Lecture Notes
+
+[Lecture 1: Intro to R](Lecture Notes/02-15-2023-Intro-to-R.html)
