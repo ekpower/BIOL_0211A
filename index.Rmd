@@ -6,8 +6,14 @@ output:
     prettydoc::html_pretty:
         theme: hpstr
         highlight: github
+editor_options: 
+  chunk_output_type: console
 ---
 
-## Lecture Notes
+### Problem Sets
+
+[Week 1 Problem Set](Problem Sets/Week_1_Problem_Set.html)
+
+### Lecture Notes
 
 [Lecture 1: Intro to R](Lecture Notes/02-15-2023-Intro-to-R.html)

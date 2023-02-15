@@ -1,0 +1,83 @@
+---
+title: "Week 1 Problem Set"
+author: "Emily K. Power"
+date: "`r Sys.Date()`"
+output: 
+    prettydoc::html_pretty:
+        theme: hpstr
+        highlight: github
+editor_options: 
+  chunk_output_type: console
+---
+
+#### Create an object in R that is a vector of the distances everyone has moved to get to Middlebury.
+```{r}
+# load in data
+distanceData <- read.table(file="/Users/emilypower/Desktop/BIOL_0211A/Data/Distance_to_Middlebury_Data.csv", header=TRUE, sep=",")
+head(distanceData)
+
+# make vector object
+distanceVector <- c(distanceData$Distance.Moved.to.Middlebury..km.)
+distanceVector
+```
+
+#### Convert those distances from km to furlongs (1 km = 4.97 furlongs). What is the largest value in this new vector?
+```{r}
+# multiply by scale factor
+distanceFurlongs <- distanceVector*4.97
+
+# print new values
+distanceFurlongs
+
+# largest value is 65285.5224 furlongs
+```
+
+#### Is the dataset we have collected a random sample of the population of students at Middlebury College?
+* No. This is not a random sample of the population of students at Middlebury because it was taken from a specific biology class. The hometowns of biology majors at Middlebury may not be representative of the general population. If we were to collect a random sample of the population, we'd have to expand our search across majors and locations on campus.
+
+#### Looking for an Extra Challenge?
+
+* Save the file as a .csv from the Google Sheet and load it into R.  
+* Create a second object that is a character variable with multiple categories like A or B (you can make up whatever you want). Then create a dataframe or tibble by adding the data we collected to this new variable.  
+```{r}
+# load library
+library(tidyverse)
+
+# what does this mean?
+```
+
+* Add the column of distance in furlongs as a separate column to your dataframe or tibble (hint: use the mutate function). 
+```{r}
+distanceDF <- data.frame(distanceData) %>%  # create data frame from data
+  mutate(Distance.Moved.to.Middlebury..furlongs. = Distance.Moved.to.Middlebury..km.*4.97)  # add furlongs column
+head(distanceDF)
+```
+
+* Use the spread function to convert your dataset into "wide" format. You can use the gather function to bring it back to "long" format. Which format is easier to work with in R, the original "long" format or the new "wide" format?  
+```{r}
+# spread data
+wideDF <- distanceDF %>%
+  spread(key=Class.Member, value=Distance.Moved.to.Middlebury..km.)
+head(wideDF) 
+
+# gather data
+longDF <- wideDF %>%
+  gather(key=Class.Member, value=Distance.Moved.to.Middlebury..km.)
+
+# I didn't do this right
+```
+
+* Try using ggplot2 to create a histogram of the dataset on distance moved to Middlebury. What features does the distribution have?
+```{r}
+# load library
+library(ggplot2)
+
+# generate histogram
+distanceHistogram <- ggplot(distanceDF, aes(x=Distance.Moved.to.Middlebury..km.)) + 
+  geom_histogram() +
+  xlab("Distance Moved to Middlebury (km)") +
+  ylab("Number of Class Members")
+distanceHistogram
+```
+
+
