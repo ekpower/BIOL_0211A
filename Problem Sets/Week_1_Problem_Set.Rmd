@@ -40,14 +40,12 @@ distanceFurlongs
 * Save the file as a .csv from the Google Sheet and load it into R.  
 * Create a second object that is a character variable with multiple categories like A or B (you can make up whatever you want). Then create a dataframe or tibble by adding the data we collected to this new variable.  
 ```{r}
-# load library
-library(tidyverse)
-
 # what does this mean?
 ```
 
 * Add the column of distance in furlongs as a separate column to your dataframe or tibble (hint: use the mutate function). 
 ```{r}
+library(tidyverse)
 distanceDF <- data.frame(distanceData) %>%  # create data frame from data
   mutate(Distance.Moved.to.Middlebury..furlongs. = Distance.Moved.to.Middlebury..km.*4.97)  # add furlongs column
 head(distanceDF)

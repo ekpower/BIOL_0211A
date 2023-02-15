@@ -224,8 +224,12 @@ categories like A or B (you can make up whatever you want). Then create
 a dataframe or tibble by adding the data we collected to this new
 variable.</li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load library</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># what does this mean?</span></span></code></pre></div>
+<ul>
+<li>Add the column of distance in furlongs as a separate column to your
+dataframe or tibble (hint: use the mutate function).</li>
+</ul>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
 ## ✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
@@ -234,11 +238,6 @@ variable.</li>
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># what does this mean?</span></span></code></pre></div>
-<ul>
-<li>Add the column of distance in furlongs as a separate column to your
-dataframe or tibble (hint: use the mutate function).</li>
-</ul>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>distanceDF <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(distanceData) <span class="sc">%&gt;%</span>  <span class="co"># create data frame from data</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Distance.Moved.to.Middlebury..furlongs. =</span> Distance.Moved.to.Middlebury..km.<span class="sc">*</span><span class="fl">4.97</span>)  <span class="co"># add furlongs column</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(distanceDF)</span></code></pre></div>
