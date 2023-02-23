@@ -1,0 +1,60 @@
+---
+title: "Week 2 Problem Set"
+author: "Emily K. Power"
+date: "`r Sys.Date()`"
+output: 
+    prettydoc::html_pretty:
+        theme: hpstr
+        highlight: github
+editor_options: 
+  chunk_output_type: console
+---
+
+1. Which tree species has the highest mean abundance in the BCI forest plot?
+```{r}
+# load in libraries
+library(dplyr)
+library(tidyr)
+library(vegan)
+
+# load dataset
+data(BCI)
+
+# calculate mean abundances
+BCI_means <- BCI %>%
+  summarise_all(mean) %>%  # get means of each species
+  gather() %>%  # gather into readable format
+  arrange(desc(value))  # arrange by descending value
+head(BCI_means)
+  # Faramea.occidentalis has the highest mean abundance (34.34)
+```
+
+Which tree species has the highest standard deviation in abundance in the BCI forest plot?
+```{r}
+# calculate mean abundances
+BCI_sds <- BCI %>%
+  summarise_all(sd) %>%  # get sds of each species
+  gather() %>%  # gather into readable format
+  arrange(desc(value))  # arrange by descending value
+head(BCI_sds)
+  # Gustavia.superba has the highest standard deviation (35.1647087)
+```
+
+What is the mean of the "distance from Middlebury" dataset (in km) that we collected last week?  
+*Note: you may read it directly from a file (we'll cover how to do this next week!) or you may use the vector you created in Week 1.*
+```{r}
+distanceData <- read.table(file="/Users/emilypower/Desktop/BIOL_0211A/Data/Distance_to_Middlebury_Data.csv", header=TRUE, sep=",")
+head(distanceData)
+
+meanDistance <- mean(distanceData$Distance.Moved.to.Middlebury..km.)
+meanDistance
+# the mean distance in km is 2002.487
+```
+
+
+
+Looking for an Extra Challenge?
+
+* Try creating a histogram of the mean count for each tree species (the column "value" in the object created by lines 45-47). Is it normally distributed? Would you expect it to be?
+
+* There is a second dataset called "BCI.env" that you can also load in from the vegan package, which contains environmental variables for each of the 50 plots. Load this dataset, merge it with with the BCI data, and calculate the mean number of trees in each category of the variable "Habitat". Hint: you will need to use the gather code included in the demo script, but think carefully about which function you would replace mean with!

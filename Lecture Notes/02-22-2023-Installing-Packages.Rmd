@@ -1,0 +1,59 @@
+---
+title: "Installing Packages"
+author: "Emily K. Power"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+Let's use `install.packages` to install a new package
+```{r}
+#install.packages('dadjokeapi')
+
+# the library function loads an installed package into the environment
+library(dadjokeapi)
+library(dplyr)
+library(tidyr)
+```
+
+Install the 'vegan' package
+  * Adds many new functions to R
+  * We are just going to use a dataset included with it
+```{r}
+#install.packages('vegan')
+
+# load the vegan package into the environment
+library(vegan)
+```
+
+Bring the "BCI" dataset into the R environment
+  * This is a dataset of 50 forest plot counts of different...
+  * These forest plots are like the ones you used in BIOL ...
+```{r}
+data(BCI)
+```
+
+This is the classic R way to calculate the mean abundance ...
+  * The `$` indicates you want to refer to a particular column
+```{r}
+mean(BCI$Cecropia.insignis)
+```
+
+The `summarise_all` function applies a function to all columns within a dataset
+  * In this case, we are applying the mean function to the...
+  * The output will be the mean count of each species across...
+```{r}
+summarise_all(BCI,mean)
+```
+
+We can also do this with an operation called a pipe.
+  * This takes an object in the line preceding it and "pipes" it into whatever is happening in the next line
+```{r}
+BCI2 <- BCI %>%
+  summarise_all(mean) %>%
+  gather()  # gathers a spread-out dataset into a tight format
+head(BCI2)
+```
+
+The `sd` function calculates standard deviation
+
+The `median` function calculates the median
