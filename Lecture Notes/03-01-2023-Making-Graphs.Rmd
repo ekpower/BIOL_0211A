@@ -1,0 +1,97 @@
+---
+title: "Making Graphs in R"
+author: "Emily K. Power"
+date: "`r Sys.Date()`"
+output: 
+    prettydoc::html_pretty:
+        theme: hpstr
+        highlight: github
+editor_options: 
+  chunk_output_type: console
+---
+
+First load the vegan, tidyr, and dplyr packages
+```{r}
+library(dplyr)
+library(tidyr)
+library(vegan)
+data(BCI)
+```
+
+Next, we will use a new package for making graphs, ggplot2
+```{r}
+library(ggplot2)
+```
+
+Let's make a histogram
+* We'll use the function `ggplot`
+* ggplot asks us to define "aesthetics" which are the x and y variables
+* we then add to the empty `ggplot` object
+* `geom_histogram` plots the probability distribution
+* `xlab` and `ylab` define the axis labels
+* `theme_classic` removes chartjunk
+```{r}
+gustavia <- BCI %>%
+  ggplot(aes(x=Gustavia.superba, y=..density..)) +  # density is not an actual variable in our dataset, this is so ggplot knows to plot the histogram as density (intead of frequency, for example)
+  geom_histogram() +
+  xlab("Trees per Hectare") +
+  ylab("Probability") +
+  theme_classic()
+gustavia
+```
+
+Calculate the mean and median so we can add them to the plot
+```{r}
+mean.gustavia = mean(BCI$Gustavia.superba)
+median.gustavia = median(BCI$Gustavia.superba)
+y=0
+```
+
+Add some points to the plot using `geom_point`
+```{r}
+gustavia +
+  geom_point(aes(x=mean.gustavia, y=y), size=5, color="red") +
+  geom_point(aes(x=median.gustavia, y=y), size=5, color="blue")
+```
+
+Now let's make a boxplot
+* `geom_boxplot` creates a boxplot
+```{r}
+BCI %>%
+  ggplot(aes(y=Gustavia.superba)) +
+  geom_boxplot() +
+  xlab("Gustavia superba") +
+  ylab("Trees per Hectare") + 
+  theme_classic()
+```
+  * Note this plot has points beyond the whiskers for outliers
+  * These are >1.5x the interquartile range (the width of the box)
+  * This is nice, but it only has one species
+  * To make a nice boxplot with multiple categories, we need our ...
+  * The `BCI` dataset is currently in the "wide format"
+  * Wide format means that each observation is represented in its own column (ever row is its own observation)
+  * The wide format is sometimes useful, but not usually in this context
+  * We prefer the "long format," where each observation gets its...
+  * Let's use `gather` to make a new object in long format
+```{r}
+BCI.long <- BCI %>%
+  gather()
+
+BCI.long %>%
+  ggplot(aes(x=key, y=value)) +
+  geom_boxplot() +
+  xlab("Species") +
+  ylab("Trees per Hectare") +
+  theme_classic()
+# way too many boxes!
+
+# filter down
+BCI.long %>%
+  filter(key=="Gustavia.superba") %>%
+  ggplot(aes(x=key, y=value)) +
+  geom_boxplot() +
+  xlab("Species") +
+  ylab("Trees per Hectare") +
+  theme_classic()
+```
+  * We can use this code to make a graph of any set species

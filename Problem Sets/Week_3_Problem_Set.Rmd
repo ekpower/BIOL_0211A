@@ -1,0 +1,76 @@
+---
+title: "Week 3 Problem Set"
+author: "Emily K. Power"
+date: "`r Sys.Date()`"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+1. Briefly compare and contrast the probability distributions for Faramea occidentalis and Gustavia superba. Consider what you thought about this last week based on the mean and median. Do these probability distributions appear to be normally distributed or skewed?  
+  * You can simply reference the graphs you made in your answer, you do not need to upload them.
+```{r}
+# load data
+data(BCI)
+head(BCI)
+
+# calculate mean and median
+mean.Faramea = mean(BCI$Faramea.occidentalis)
+median.Faramea = median(BCI$Faramea.occidentalis)
+y=0
+
+# make histogram
+Faramea <- BCI %>%
+  ggplot(aes(x=Faramea.occidentalis, y=..density..)) +
+  geom_histogram() +
+  xlab("Trees per Hectare") +
+  ylab("Probability") +
+  theme_classic() +
+  geom_point(aes(x=mean.Faramea, y=y), size=5, color="red") +
+  geom_point(aes(x=median.Faramea, y=y), size=5, color="blue")
+Faramea
+# more normal distribution
+
+# calculate mean and median
+mean.gustavia = mean(BCI$Gustavia.superba)
+median.gustavia = median(BCI$Gustavia.superba)
+y=0
+
+# make histogram
+Gustavia <- BCI %>%
+  ggplot(aes(x=Gustavia.superba, y=..density..)) +
+  geom_histogram() +
+  xlab("Trees per Hectare") +
+  ylab("Probability") +
+  theme_classic() +
+  geom_point(aes(x=mean.gustavia, y=y), size=5, color="red") +
+  geom_point(aes(x=median.gustavia, y=y), size=5, color="blue")
+Gustavia
+# positive skew
+
+```
+
+2. Upload the boxplot you made showing the distributions of Cecropia insignis and Cecropia obtusifolia in this forest plot. You can upload it as a .jpg or .pdf file.
+```{r}
+boxplot <- BCI.long %>%
+  filter(key==c("Cecropia.insignis", "Cecropia.obtusifolia")) %>%
+  ggplot(aes(x=key, y=value)) +
+  geom_boxplot() +
+  xlab("Species") +
+  ylab("Trees per Hectare") + 
+  theme_classic()
+boxplot
+```
+
+
+3. The data you are working with represent counts of every individual tree within the 50 1-hectare plots studied. Do you think these represent a random sample of the population of trees within these plots? Why or why not?
+* Yes, because every tree has the same chance of being sampled (100% chance).
+
+
+4. Looking for an Extra Challenge?
+
+* Plot each box in a different color
+* Change the name of the species labels to make them more visually appealing (e.g., removing the periods between genus and species)
+* Add a main title
+* Change font size of the text to make it easier to read
+* Make a stripchart that represents the same data you put on your boxplot
