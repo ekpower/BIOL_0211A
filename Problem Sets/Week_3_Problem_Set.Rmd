@@ -11,8 +11,11 @@ editor_options:
   * You can simply reference the graphs you made in your answer, you do not need to upload them.
 ```{r}
 # load data
+library(vegan)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
 data(BCI)
-head(BCI)
 
 # calculate mean and median
 mean.Faramea = mean(BCI$Faramea.occidentalis)
@@ -52,7 +55,8 @@ Gustavia
 
 2. Upload the boxplot you made showing the distributions of Cecropia insignis and Cecropia obtusifolia in this forest plot. You can upload it as a .jpg or .pdf file.
 ```{r}
-boxplot <- BCI.long %>%
+boxplot <- BCI %>%
+  gather() %>%
   filter(key==c("Cecropia.insignis", "Cecropia.obtusifolia")) %>%
   ggplot(aes(x=key, y=value)) +
   geom_boxplot() +
