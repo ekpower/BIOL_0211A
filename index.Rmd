@@ -18,6 +18,8 @@ editor_options:
 
 [Week 3 Problem Set](Problem Sets/Week_3_Problem_Set.html)
 
+[Week 5 Problem Set](Problem Sets/Week_5_Problem_Set.html)
+
 ### Lecture Notes
 
 [Lecture 1: Intro to R](Lecture Notes/02-15-2023-Intro-to-R.html)
@@ -25,3 +27,5 @@ editor_options:
 [Lecture 2: Installing Packages](Lecture Notes/02-22-2023-Installing-Packages.html)
 
 [Lecture 3: Making Graphs](Lecture Notes/03-01-2023-Making-Graphs.html)
+
+[Lecture 4: Contingency Analysis](Lecture Notes/03-14-2023-Contingency-Analysis.html)

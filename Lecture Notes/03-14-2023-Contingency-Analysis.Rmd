@@ -1,0 +1,97 @@
+---
+title: "Contingency Analysis"
+author: "Emily K. Power"
+date: "`r Sys.Date()`"
+output: 
+    prettydoc::html_pretty:
+        theme: hpstr
+        highlight: github
+editor_options: 
+  chunk_output_type: console
+---
+
+Load in libraries
+```{r}
+library(dplyr)
+library(ggplot2)
+library(ggmosaic)
+library(colorBlindness)
+```
+
+Load in data
+```{r}
+sickle<-read.csv("/Users/emilypower/Desktop/BIOL_0211A/Data/sicklecell.csv")
+```
+
+Make a mosaic plot and save as an object
+```{r}
+#geom_mosaic is the function to make the mosaic plot
+sickleplot<-
+sickle%>%
+  ggplot()+
+  geom_mosaic(aes(x=product(Genotype,Country),fill=Genotype))+
+  theme_classic()
+
+#display the plot
+sickleplot
+
+#check if it is colorblind friendly
+cvdPlot(sickleplot)
+
+#remake the plot using manual color palette with scale_fill_manual
+#note that we need to use the c function to create the vector of colors we want to display
+sickleplot<-
+  sickle%>%
+  ggplot()+
+  geom_mosaic(aes(x=product(Genotype,Country),fill=Genotype))+
+  scale_fill_manual(values=c("hotpink1","tomato2","firebrick3"))+
+  theme_classic()
+
+#display the new plot
+sickleplot
+
+#check again
+cvdPlot(sickleplot)
+
+
+########Do the test!!!
+
+
+#perform chi square test
+#we save it as an object to pull the expected values from it
+chitest.sickle<-
+chisq.test(sickle$Genotype,sickle$Country)
+
+#pull the expected values to check assumptions
+chitest.sickle$expected
+
+chitest.sickle
+
+#here we don't need to do a Fisher's Exact Test
+#but let's pretend we did
+#we are going to first condense our table into a 2x2 table
+#Prof Moody wrote the code to do this with the help of ChatGPT!
+#ifelse is a function telling it to do the first thing if the condition is met, the second thing if the condition is not met
+#the %in% operator would translate to "is equal to"
+#so the first thing is saying we will create a column called "Homozygote" where if the Genotype is equal to SA, it is a heterozygote, otherwise it is a homozygote
+sickle2<-
+  sickle%>%
+  mutate(Homozygote=ifelse(Genotype %in% "SA","Heterozygote","Homozygote"),
+         Temperate=ifelse(Country %in% "Iceland","Temperate","Tropical"))
+
+#this is the code to do Fishers Exact Test on the 2x2 table we just made
+fisher.test(sickle2$Homozygote,sickle2$Temperate)
+
+#maybe we want to remake our plot to reflect our new analysis
+sickleplot2<-
+  sickle2%>%
+  ggplot()+
+  geom_mosaic(aes(x=product(Homozygote,Temperate),fill=Homozygote))+
+  scale_fill_manual(values=c("hotpink1","firebrick3"))+
+  xlab("Region")+
+  ylab("Genotype")+
+  theme_classic()
+
+sickleplot2
+```
+

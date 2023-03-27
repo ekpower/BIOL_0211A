@@ -1,0 +1,45 @@
+---
+title: "Week 5 Problem Set"
+author: "Emily K. Power"
+date: "`r Sys.Date()`"
+output: 
+    prettydoc::html_pretty:
+        theme: hpstr
+        highlight: github
+editor_options: 
+  chunk_output_type: console
+---
+
+Load in libraries
+```{r}
+library(dplyr)
+library(ggplot2)
+library(ggmosaic)
+library(colorBlindness)
+```
+
+
+1. Using the dataset collected on our class, we want to test **the null hypothesis that there is no relationship between being a Feb and being an Environmental Studies STEM major.** Would these data meet the assumptions of a chi-square test as applied to STEM majors at Middlebury College? State each assumption and what evidence you have that it is met or not.
+```{r}
+# load in data
+PS5_data <- read.csv("/Users/emilypower/Desktop/BIOL_0211A/Data/ProblemSet5Data.csv")
+
+# perform chi square test
+chitest_PS5 <- chisq.test(PS5_data$Major, PS5_data$GradDate)
+
+# pull expected values from test
+chitest_PS5$expected
+```
+
+  * X^2 Assumptions:
+    * Samples have to be randomly sampled from their respective population: This was not a random sample because the data was collected from the BIOL 0211 class alone. If we are trying to determine if there is a relationship between being a feb at Middlebury College and being an environmental STEM major among STEM majors at Middlebury, we would have to collect a random sample of STEM majors at Middlebury, rather than within a specific class. This class has prerequisites and appeals to biology students, but we are interested in more than biology students. 
+    * *Less than 20% of cells have an expected frequency less than 5: Two of the cells have an expected frequency less than 5 (ENVS Feb = 2.2, Not ENVS Feb = 2.8). This is 50% of the 4 cells. Therefore, these data do not meet this assumption.
+    * No cells have an expected frequency of less than 1: This is true. All cells have expected frequencies of 2.2 or above.
+
+
+2. Draw a conclusion and provide the full test result (test statistic, degrees of freedom, and p value) using the most powerful and appropriate test for the hypothesis test described in Question 1. Also include the code you used to calculate this result.
+```{r}
+# since these data don't meet the assumptions of a chi squared test, I will perform a Fishers Exact Test
+test(PS5_data$GradDate,PS5_data$Major)
+```
+  * We failed to reject the null hypothesis because p>0.05 and thus there is no significant relationship between being a Feb and being an environmental STEM major. 
